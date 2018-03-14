@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Busses index page</title>
+    {% load static %}
+    <script language="javascript" type="text/javascript" src="{% static 'buses/dhtmlx.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'buses/dhtmlx.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'buses/style.css' %}" />
+
+    <script>
+		var myGrid;
+		function doOnLoad(){
+			myGrid = new dhtmlXGridObject('gridbox');
+			myGrid.setImagePath("{% static 'buses/imgs/' %}");
+			myGrid.setHeader(
+			    "Name, Voltage(kV)",
+                null,
+                ["text-align:center;color:red;background-color:#d1d1d1;","text-align:center;color:red;background-color:#d1d1d1;"]
+            );
+			myGrid.setInitWidths("200,*");
+			myGrid.setColAlign("left,center");
+			myGrid.setColTypes("tree,ed");
+			myGrid.setColSorting("str,str");
+			myGrid.init();
+			myGrid.load('/buses/table', 'json');
+			console.log(myGrid.getRowsNum());
+		}
+	</script>
+
+</head>
+
+<body onLoad="doOnLoad()">
+    <h1>TreeGrid initialization</h1>
+	<p>TreeGrid is initialized from JSON gotten from Power Factory</p>
+	<div id="gridbox" style="width:550px;height:250px;background-color:white;"></div>
+</body>
+</html>
